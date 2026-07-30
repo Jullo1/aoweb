@@ -21,3 +21,5 @@ playwright-report/
 *.cer
 *.jks
 *.keystore
+server/package.json
+server/pnpm-lock.yaml
