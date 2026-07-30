@@ -220,9 +220,7 @@ class LoadMaps {
 						vars.mapa[mapNum][y][x] = runtimeTile;
 					}
 					
-                    vars.mapData[mapNum][y][x] = {
-                        id: 0,
-                    };
+                    vars.mapData[mapNum][y][x] = 0;
                 }
             }
 
