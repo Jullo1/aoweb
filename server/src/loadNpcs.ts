@@ -144,7 +144,10 @@ class LoadNpcs {
         vars.npcs[tmpNPC.id] = tmpNPC;
         vars.npcs[tmpNPC.id].cooldownAtaque = +Date.now() + 4000;
         vars.areaNpc[tmpNPC.id] = [];
-
+		
+		if (!vars.mapData[mapNum][tmpNPC.pos.y][tmpNPC.pos.x]) {
+			vars.mapData[mapNum][tmpNPC.pos.y][tmpNPC.pos.x] = {};
+		}
         vars.mapData[mapNum][tmpNPC.pos.y][tmpNPC.pos.x].id = tmpNPC.id;
     }
 

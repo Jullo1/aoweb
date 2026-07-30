@@ -173,6 +173,17 @@ wsServer = new WebSocketServer({
     server: httpServer,
 }) as WSServer;
 
+setInterval(() => {
+    const mem = process.memoryUsage();
+
+    console.log({
+        rss: `${(mem.rss / 1024 / 1024).toFixed(1)} MB`,
+        heapUsed: `${(mem.heapUsed / 1024 / 1024).toFixed(1)} MB`,
+        heapTotal: `${(mem.heapTotal / 1024 / 1024).toFixed(1)} MB`,
+        external: `${(mem.external / 1024 / 1024).toFixed(1)} MB`,
+    });
+}, 5000);
+
 const loadMaps = require("./loadMaps");
 const loadObjs = require("./loadObjs");
 const loadBalance = require("./loadBalance");

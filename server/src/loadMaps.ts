@@ -174,7 +174,13 @@ class LoadMaps {
         await Promise.all(arMapsToLoad);
 
         console.log("Mapas Cargados.");
+		global.gc?.();
 
+		console.log(
+			process.memoryUsage().heapUsed / 1024 / 1024,
+			"MB after maps"
+		);
+		
         const LoadNpcs = new loadNpcs();
         await LoadNpcs.initialize();
     }
@@ -193,33 +199,33 @@ class LoadMaps {
             const width = Math.max(1, toNumber(terrain.width, 100));
             const height = Math.max(1, toNumber(terrain.height, 100));
 
-            vars.mapa[mapNum] = {};
+            vars.mapa[mapNum] = [];
             vars.mapData[mapNum] = [];
 
             for (let y = 1; y <= height; y++) {
-                vars.mapa[mapNum][y] = {};
+				vars.mapa[mapNum][y] = [];
                 vars.mapData[mapNum][y] = [];
 
                 const row = Array.isArray(rows[y - 1]) ? rows[y - 1] : [];
 
                 for (let x = 1; x <= width; x++) {
-                    const runtimeTile: Record<string, unknown> = {};
-                    const paletteId = toNumber(row[x - 1], 0);
-                    const paletteTile = paletteId > 0 ? palette[String(paletteId)] : undefined;
-                    const graphics = normalizeGraphics(paletteTile?.graphics);
+					const paletteId = toNumber(row[x - 1], 0);
+					const paletteTile = paletteId > 0 ? palette[String(paletteId)] : undefined;
+					const graphics = normalizeGraphics(paletteTile?.graphics);
+					
+					if (paletteTile?.blocked || graphics) {
+						const runtimeTile: Record<string, unknown> = {};
 
-                    if (paletteTile?.blocked) {
-                        runtimeTile.blocked = 1;
-                    }
+						if (paletteTile?.blocked) {
+							runtimeTile.blocked = 1;
+						}
 
-                    if (graphics) {
-                        runtimeTile.graphics = graphics;
-                    }
+						if (graphics) {
+							runtimeTile.graphics = graphics;
+						}
 
-                    vars.mapa[mapNum][y][x] = runtimeTile;
-                    vars.mapData[mapNum][y][x] = {
-                        id: 0,
-                    };
+						vars.mapa[mapNum][y][x] = runtimeTile;
+					}
                 }
             }
 
