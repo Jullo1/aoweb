@@ -215,8 +215,11 @@ class LoadMaps {
                     if (graphics) {
                         runtimeTile.graphics = graphics;
                     }
-
-                    vars.mapa[mapNum][y][x] = runtimeTile;
+					
+					if (paletteTile?.blocked || graphics) {
+						vars.mapa[mapNum][y][x] = runtimeTile;
+					}
+					
                     vars.mapData[mapNum][y][x] = {
                         id: 0,
                     };
