@@ -823,6 +823,11 @@ function Login(this: LoginApi) {
 
                 relocateCharacterIfNeeded(ws);
 
+				
+				if (!vars.mapData[vars.personajes[ws.id].map][vars.personajes[ws.id].pos.y][vars.personajes[ws.id].pos.x]) {
+					vars.mapData[vars.personajes[ws.id].map][vars.personajes[ws.id].pos.y][vars.personajes[ws.id].pos.x] = {};
+				}
+				
                 vars.mapData[vars.personajes[ws.id].map][vars.personajes[ws.id].pos.y][
                     vars.personajes[ws.id].pos.x
                 ].id = ws.id;
