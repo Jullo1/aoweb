@@ -219,7 +219,7 @@ class LoadMaps {
 
                 for (let x = 1; x <= width; x++) {
 					const paletteId = toNumber(row[x - 1], 0);
-					const paletteTile = normalizedPalette[paletteId];
+					const paletteTile = normalizedPalette[String(paletteId)];
 					
 					if (paletteTile) {
 						vars.mapa[mapNum][y][x] = paletteTile;
