@@ -23,5 +23,3 @@ playwright-report/
 *.keystore
 server/package.json
 server/pnpm-lock.yaml
-server/package.json
-server/pnpm-lock.yaml

@@ -9,3 +9,5 @@ reports/
 .env*
 !.env.example
 !.env.docker.example
+package.json
+pnpm-lock.yaml
