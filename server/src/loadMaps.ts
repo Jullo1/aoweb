@@ -201,6 +201,15 @@ class LoadMaps {
 
             vars.mapa[mapNum] = [];
             vars.mapData[mapNum] = [];
+			
+			const normalizedPalette = {};
+
+			for (const [id, tile] of Object.entries(palette)) {
+				normalizedPalette[id] = {
+					blocked: tile.blocked ? 1 : 0,
+					graphics: normalizeGraphics(tile.graphics),
+				};
+}
 
             for (let y = 1; y <= height; y++) {
 				vars.mapa[mapNum][y] = [];
@@ -210,21 +219,10 @@ class LoadMaps {
 
                 for (let x = 1; x <= width; x++) {
 					const paletteId = toNumber(row[x - 1], 0);
-					const paletteTile = paletteId > 0 ? palette[String(paletteId)] : undefined;
-					const graphics = normalizeGraphics(paletteTile?.graphics);
+					const paletteTile = normalizedPalette[paletteId];
 					
-					if (paletteTile?.blocked || graphics) {
-						const runtimeTile: Record<string, unknown> = {};
-
-						if (paletteTile?.blocked) {
-							runtimeTile.blocked = 1;
-						}
-
-						if (graphics) {
-							runtimeTile.graphics = graphics;
-						}
-
-						vars.mapa[mapNum][y][x] = runtimeTile;
+					if (paletteTile) {
+						vars.mapa[mapNum][y][x] = paletteTile;
 					}
                 }
             }
