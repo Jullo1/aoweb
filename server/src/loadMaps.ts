@@ -202,7 +202,7 @@ class LoadMaps {
             vars.mapa[mapNum] = [];
             vars.mapData[mapNum] = [];
 			
-			const normalizedPalette = {};
+			const normalizedPalette: Record<string, RuntimePaletteTile> = {};
 
 			for (const [id, tile] of Object.entries(palette)) {
 				normalizedPalette[id] = {
