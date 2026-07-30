@@ -1486,6 +1486,9 @@ function updateUserAreaAfterMovement(ws: RuntimeClient, user: RuntimeCharacter, 
 
         for (let y = positionStartY; y < positionStartY + AREA_DIAMETER_Y; y++) {
             if (positionStartX >= 1 && y >= 1 && positionStartX <= 100 && y <= 100) {
+                if (!vars.mapData[user.map][y][positionStartX]) {
+                    vars.mapData[user.map][y][positionStartX] = [];
+                }
                 const mapData = vars.mapData[user.map][y][positionStartX];
 
                 if (mapData.id) {
@@ -1600,6 +1603,9 @@ function updateUserAreaAfterMovement(ws: RuntimeClient, user: RuntimeCharacter, 
 
         for (let y = positionStartY; y < positionStartY + AREA_DIAMETER_Y; y++) {
             if (positionStartX >= 1 && y >= 1 && positionStartX <= 100 && y <= 100) {
+                if (!vars.mapData[user.map][y][positionStartX]) {
+                    vars.mapData[user.map][y][positionStartX] = [];
+                }
                 const mapData = vars.mapData[user.map][y][positionStartX];
 
                 if (mapData.id) {
@@ -1714,6 +1720,9 @@ function updateUserAreaAfterMovement(ws: RuntimeClient, user: RuntimeCharacter, 
 
         for (let x = positionStartX; x < positionStartX + AREA_DIAMETER_X; x++) {
             if (x >= 1 && positionStartY >= 1 && x <= 100 && positionStartY <= 100) {
+                if (!vars.mapData[user.map][positionStartY][x]) {
+                    vars.mapData[user.map][positionStartY][x] = [];
+                }
                 const mapData = vars.mapData[user.map][positionStartY][x];
 
                 if (mapData.id) {
@@ -1787,8 +1796,10 @@ function updateUserAreaAfterMovement(ws: RuntimeClient, user: RuntimeCharacter, 
 
         for (let x = positionStartX; x < positionStartX + AREA_DIAMETER_X; x++) {
             if (x >= 1 && positionStartY >= 1 && x <= 100 && positionStartY <= 100) {
+				if (!vars.mapData[user.map][positionStartY][x]) {
+					vars.mapData[user.map][positionStartY][x] = [];
+				}
                 const mapData = vars.mapData[user.map][positionStartY][x];
-
                 if (mapData.id) {
                     const areaTarget = resolveAreaTarget(user.map, x, positionStartY);
 
@@ -1828,6 +1839,7 @@ function updateUserAreaAfterMovement(ws: RuntimeClient, user: RuntimeCharacter, 
 
         for (let x = positionStartX; x < positionStartX + AREA_DIAMETER_X; x++) {
             if (x >= 1 && positionStartY >= 1 && x <= 100 && positionStartY <= 100) {
+                if (!vars.mapData[user.map][positionStartY][x]) vars.mapData[user.map][positionStartY][x] = [];
                 const mapData = vars.mapData[user.map][positionStartY][x];
 
                 if (mapData.id) {
@@ -1901,6 +1913,9 @@ function updateUserAreaAfterMovement(ws: RuntimeClient, user: RuntimeCharacter, 
 
         for (let x = positionStartX; x < positionStartX + AREA_DIAMETER_X; x++) {
             if (x >= 1 && positionStartY >= 1 && x <= 100 && positionStartY <= 100) {
+				if (!vars.mapData[user.map][positionStartY][x]) {
+					vars.mapData[user.map][positionStartY][x] = [];
+				}
                 const mapData = vars.mapData[user.map][positionStartY][x];
 
                 if (mapData.id) {
@@ -1946,6 +1961,9 @@ function processUserMovement(ws: RuntimeClient, heading: number, moveId: number,
         return;
     }
 
+    const oldX = user.pos.x;
+    const oldY = user.pos.y;
+
     user.lastProcessedMoveId = moveId;
     user.heading = heading;
 
@@ -1961,8 +1979,6 @@ function processUserMovement(ws: RuntimeClient, heading: number, moveId: number,
 
     stopMeditation(ws, user);
 
-    const oldX = user.pos.x;
-    const oldY = user.pos.y;
 
     let newX = 0;
     let newY = 0;
@@ -1976,9 +1992,10 @@ function processUserMovement(ws: RuntimeClient, heading: number, moveId: number,
     } else if (heading == vars.direcciones.up) {
         newY = -1;
     }
-
     let posX = oldX + newX;
     let posY = oldY + newY;
+
+
     const phasedDestination = resolveDeadWorldMovementDestination(user, posX, posY, heading);
     posX = phasedDestination.x;
     posY = phasedDestination.y;
@@ -2016,7 +2033,7 @@ function processUserMovement(ws: RuntimeClient, heading: number, moveId: number,
         sendOwnPositionUpdate(ws, user);
         return;
     }
-
+    
     const tileExit = vars.mapa[user.map]?.[posY]?.[posX]?.tileExit;
     const tileExitDestination = game.resolveTileExitDestination(
         ws,

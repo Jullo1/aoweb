@@ -5768,6 +5768,9 @@ function Game(this: GameApi) {
                 for (let y = posYStart; y <= posYEnd; y++) {
                     for (let x = posXStart; x <= posXEnd; x++) {
                         if (x >= 1 && y >= 1 && x <= 100 && y <= 100) {
+                            if (!vars.mapData[user.map][y][x]) {
+                                vars.mapData[user.map][y][x] = [];
+                            }
                             const mapData = vars.mapData[user.map][y][x];
 
                             if (mapData.id) {
