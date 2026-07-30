@@ -206,14 +206,15 @@ class LoadMaps {
 				blocked?: number;
 				graphics?: Record<number, number>;
 			};
-			const normalizedPalette: Record<string, RuntimePaletteTile> = {};
+			const normalizedPalette: Record<number, RuntimePaletteTile> = {};
 
-			for (const [id, tile] of Object.entries(palette)) {
-				normalizedPalette[id] = {
-					blocked: tile.blocked ? 1 : 0,
-					graphics: normalizeGraphics(tile.graphics),
-				};
-}
+			for (const id in palette) {
+                normalizedPalette[+id] = {
+                    blocked: palette[id].blocked ? 1 : undefined,
+                    graphics: normalizeGraphics(palette[id].graphics),
+                };
+            }
+
 
             for (let y = 1; y <= height; y++) {
 				vars.mapa[mapNum][y] = [];
@@ -222,8 +223,7 @@ class LoadMaps {
                 const row = Array.isArray(rows[y - 1]) ? rows[y - 1] : [];
 
                 for (let x = 1; x <= width; x++) {
-					const paletteId = toNumber(row[x - 1], 0);
-					const paletteTile = normalizedPalette[String(paletteId)];
+					const paletteTile = normalizedPalette[row[x - 1]];
 
                     if (paletteTile.blocked || paletteTile.graphics)
                     {
