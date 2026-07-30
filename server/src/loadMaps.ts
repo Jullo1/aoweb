@@ -132,7 +132,7 @@ function normalizeTileExitDestinations(exit: TileExitConfig | undefined): Array<
 
 function ensureRuntimeTile(mapId: number, x: number, y: number) {
     if (!vars.mapa[mapId][y]) {
-        vars.mapa[mapId][y] = {};
+        vars.mapa[mapId][y] = [];
     }
 
     if (!vars.mapa[mapId][y][x]) {
@@ -193,11 +193,11 @@ class LoadMaps {
             const width = Math.max(1, toNumber(terrain.width, 100));
             const height = Math.max(1, toNumber(terrain.height, 100));
 
-            vars.mapa[mapNum] = {};
+            vars.mapa[mapNum] = [];
             vars.mapData[mapNum] = [];
 
             for (let y = 1; y <= height; y++) {
-                vars.mapa[mapNum][y] = {};
+                vars.mapa[mapNum][y] = [];
                 vars.mapData[mapNum][y] = [];
 
                 const row = Array.isArray(rows[y - 1]) ? rows[y - 1] : [];
