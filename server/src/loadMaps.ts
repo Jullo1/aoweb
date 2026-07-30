@@ -202,6 +202,10 @@ class LoadMaps {
             vars.mapa[mapNum] = [];
             vars.mapData[mapNum] = [];
 			
+			type RuntimePaletteTile = {
+				blocked?: number;
+				graphics?: Record<number, number>;
+			};
 			const normalizedPalette: Record<string, RuntimePaletteTile> = {};
 
 			for (const [id, tile] of Object.entries(palette)) {
