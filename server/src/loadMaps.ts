@@ -218,17 +218,17 @@ class LoadMaps {
 
             for (let y = 1; y <= height; y++) {
 				vars.mapa[mapNum][y] = [];
-                vars.mapData[mapNum][y] = [];
-
-                const row = Array.isArray(rows[y - 1]) ? rows[y - 1] : [];
+                vars.mapData[mapNum][y] = vars.mapa[mapNum][y];
+                
+                const row = rows[y - 1];
 
                 for (let x = 1; x <= width; x++) {
-					const paletteTile = normalizedPalette[row[x - 1]];
+					const paletteTile = normalizedPalette[row[x-1]];
 
                     if (paletteTile.blocked || paletteTile.graphics)
                     {
-                        vars.mapData[mapNum][y][x] = [];
                         vars.mapa[mapNum][y][x] = [];
+                        vars.mapData[mapNum][y][x] = vars.mapa[mapNum][y][x];
                     }
                 }
             }
