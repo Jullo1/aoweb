@@ -200,13 +200,13 @@ class LoadMaps {
             const height = Math.max(1, toNumber(terrain.height, 100));
 
             vars.mapa[mapNum] = [];
-            vars.mapData[mapNum] = [];
+            vars.mapData[mapNum] = vars.mapa[mapNum];
 			
 			type RuntimePaletteTile = {
 				blocked?: number;
 				graphics?: Record<number, number>;
 			};
-			const normalizedPalette: Record<number, RuntimePaletteTile> = {};
+			const normalizedPalette: Record<number, RuntimePaletteTile> = [];
 
 			for (const id in palette) {
                 normalizedPalette[+id] = {
@@ -233,7 +233,7 @@ class LoadMaps {
                 }
             }
 
-            for (const [coordinateKey, exit] of Object.entries(specials.exits ?? {})) {
+            for (const [coordinateKey, exit] of Object.entries(specials.exits ?? [])) {
                 const coordinates = parseCoordinateKey(coordinateKey);
                 if (!coordinates) {
                     continue;
@@ -248,7 +248,7 @@ class LoadMaps {
                 tile.tileExit = destinations.length === 1 ? destinations[0] : { destinations };
             }
 
-            for (const [coordinateKey, objectInfo] of Object.entries(specials.objects ?? {})) {
+            for (const [coordinateKey, objectInfo] of Object.entries(specials.objects ?? [])) {
                 const coordinates = parseCoordinateKey(coordinateKey);
                 if (!coordinates) {
                     continue;
@@ -261,7 +261,7 @@ class LoadMaps {
                 };
             }
 
-            for (const [coordinateKey, npcIndex] of Object.entries(specials.npcs ?? {})) {
+            for (const [coordinateKey, npcIndex] of Object.entries(specials.npcs ?? [])) {
                 const coordinates = parseCoordinateKey(coordinateKey);
                 if (!coordinates) {
                     continue;
@@ -271,7 +271,7 @@ class LoadMaps {
                 tile.npcIndex = toNumber(npcIndex);
             }
 
-            for (const [coordinateKey, trigger] of Object.entries(specials.triggers ?? {})) {
+            for (const [coordinateKey, trigger] of Object.entries(specials.triggers ?? [])) {
                 const coordinates = parseCoordinateKey(coordinateKey);
                 if (!coordinates) {
                     continue;
