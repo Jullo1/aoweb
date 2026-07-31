@@ -224,16 +224,17 @@ class LoadMaps {
                 for (let x = 1; x <= width; x++) {
 					const paletteTile = normalizedPalette[row[x-1]];
 
-                    if (paletteTile.blocked || paletteTile.graphics)
+                    if (paletteTile.graphics)
                     {
                         vars.mapa[mapNum][y][x] = [];
                         vars.mapData[mapNum][y][x] = vars.mapa[mapNum][y][x];
+                        
+                        if (paletteTile?.blocked)
+                        {
+                            vars.mapa[mapNum][y][x].blocked = 1;
+                        }
                     }
 
-                    if (paletteTile?.blocked)
-                    {
-                        vars.mapa[mapNum][y][x].blocked = 1;
-                    }
                 }
             }
 
