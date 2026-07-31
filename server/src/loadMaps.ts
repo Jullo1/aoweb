@@ -215,7 +215,6 @@ class LoadMaps {
                 };
             }
 
-
             for (let y = 1; y <= height; y++) {
 				vars.mapa[mapNum][y] = [];
                 vars.mapData[mapNum][y] = vars.mapa[mapNum][y];
@@ -229,6 +228,11 @@ class LoadMaps {
                     {
                         vars.mapa[mapNum][y][x] = [];
                         vars.mapData[mapNum][y][x] = vars.mapa[mapNum][y][x];
+                    }
+
+                    if (paletteTile?.blocked)
+                    {
+                        vars.mapa[mapNum][y][x].blocked = 1;
                     }
                 }
             }
