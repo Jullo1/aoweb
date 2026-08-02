@@ -303,6 +303,14 @@ app.use((request, response, next) => {
     next();
 });
 
+app.get("/", async (_request, response) => {
+    response.json({
+        status: "ok",
+        uptime: process.uptime(),
+    });
+	console.log("up");
+});
+
 app.get("/health", async (_request, response) => {
     await pool.query("SELECT 1");
     response.json({ ok: true });
