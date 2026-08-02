@@ -203,12 +203,28 @@ const npcs = require("./npcs") as NpcsApi;
 const runtimeTiming = require("./runtimeTiming");
 const handleProtocol = require("./handleProtocol") as HandleProtocolApi;
 
-function handleHttpRequest(request: any, response: any) {
-    void request;
+function handleHttpRequest(req: any, res: any) {
+    if (req.url === "/health") {
+        res.writeHead(200, {
+            "Content-Type": "application/json",
+        });
 
-    response.statusCode = 404;
-    response.setHeader("Content-Type", "application/json; charset=utf-8");
-    response.end(JSON.stringify({ error: "Not found" }));
+        res.end(
+            JSON.stringify({
+                status: "ok",
+                players: vars.usuariosOnline,
+                uptime: process.uptime(),
+            }),
+        );
+        return;
+    }
+
+    res.writeHead(200, {
+        "Content-Type": "text/plain",
+    });
+
+    console.log("up");
+    res.end("AO Server running");
 }
 
 const PACKET_TYPE_NAMES: Record<number, string> = {
